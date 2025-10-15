@@ -1,6 +1,9 @@
 from app.game import generate_code, validate_guess, check_code_guessed
 
 # --------------------------test generate_code------------------------------------
+def test_generate_code_returns_list():
+    result = generate_code()
+    assert isinstance(result, list)
 
 def test_generate_code_length_four():
     # Arrange/Act
@@ -20,6 +23,18 @@ def test_generate_code_uses_valid_letters():
     # Assert
     for letter in result:
         assert letter in valid_letters
+
+def test_generate_code_contains_only_valid_letters():
+    valid_letters = {'R', 'O', 'Y', 'G', 'B', 'P'}
+    result = generate_code()
+    for letter in result:
+        assert letter in valid_letters
+
+def test_generate_code_randomness():
+    # Run generate_code multiple times and check for different outputs
+    codes = {tuple(generate_code()) for _ in range(20)}
+    # There should be more than one unique code generated
+    assert len(codes) > 1
 
 # --------------------------test validate_guess------------------------------------
 
